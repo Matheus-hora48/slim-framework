@@ -7,11 +7,23 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\App;
 
-//PSR7 
-$app->get('/postagens', function(request $request, Response $response){
+//container dependency injection
+class Servico{
 
-	//forma de retorno de dados para o usuario
-	$response->getBody()->write('Listagem de postagens');
+}
+$servico = new Servico;
+$app->get('/servico', function(Request $request, Response $response){
+
+	var_dump($servico)
+
+} );
+
+$app->run();
+/* Padrão PSR7 
+$app->get('/postagens', function(Request $request, Response $response){
+
+	/* Escreve no corpo da resposta utilizando o padrão PSR7 
+	$response->getBody()->write("Listagem de postagens");
 
 	return $response;
 
@@ -24,15 +36,57 @@ get -> Recuperar recursos do servidor (Select)
 post -> Criar dado no servidor (Insert)
 put -> Atualizar dados no servidor (Update)
 delete -> Deletar dados do servidor (Delete)
+
+
+
+$app->delete('/usuarios/remove/{id}', function(Request $request, Response $response){
+
+	$id = $request->getAttribute('id');
+	
+	/*
+	Deletar do banco de dados com DELETE..
+	....
+	
+
+	return $response->getBody()->write( "Sucesso ao deletar: " . $id );
+
+} );
+
+$app->put('/usuarios/atualiza', function(Request $request, Response $response){
+
+	//Recupera post ($_POST)
+	$post  = $request->getParsedBody();
+	$id    = $post['id'];
+	$nome  = $post['nome'];
+	$email = $post['email'];
+
+	/*
+	Atualizar no banco de dados com UPDATE..
+	....
+
+
+	return $response->getBody()->write( "Sucesso ao atualizar: " . $id );
+
+} );
+
+$app->post('/usuarios/adiciona', function(Request $request, Response $response){
+
+	//Recupera post ($_POST)
+	$post  = $request->getParsedBody();
+	$nome  = $post['nome'];
+	$email = $post['email'];
+
+	/*
+	Salvar no banco de dados com INSERT INTO..
+	....
+	
+
+	return $response->getBody()->write( "Sucesso" );
+
+} );
 */
 
-$app->post('/usuario/adiciona', function(request $request, Response $response){
-	$post = $request->getParsedBody();
 
-	return $response->getBody()->write($post['email']);
-});
-
-$app->run();
 
 /*
 $app->get('/postagens2', function(){
