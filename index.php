@@ -1,8 +1,38 @@
 <?php
 
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
 require 'vendor/autoload.php';
 
 $app = new \Slim\App;
+
+//PSR7 
+$app->get('/postagens', function(request $request, Response $response){
+
+	//forma de retorno de dados para o usuario
+	$response->getBody()->write('Listagem de postagens');
+
+	return $response;
+
+} );
+
+/*
+Tipos de requisição ou Verbos HTTP
+
+get -> Recuperar recursos do servidor (Select)
+post -> Criar dado no servidor (Insert)
+put -> Atualizar dados no servidor (Update)
+delete -> Deletar dados do servidor (Delete)
+*/
+
+$app->post('/usuario/adiciona', function(request $request, Response $response){
+	$post = $request->getParsedBody();
+
+	return $response->getBody()->write($post['email']);
+});
+
+$app->run();
 
 /*
 $app->get('/postagens2', function(){
@@ -70,4 +100,3 @@ $app->group('/v5', function(){
 } );
 */
 
-$app->run();
