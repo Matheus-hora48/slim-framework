@@ -19,7 +19,7 @@ $container['servico'] = function(){
 	return new Servico;
 }
 
-$app->get('/servico', function(Request $request, Response $response){
+$app->get('/usuario', function(Request $request, Response $response){
 
 	$servico = $this->get('servico');
 	var_dump($servico);
