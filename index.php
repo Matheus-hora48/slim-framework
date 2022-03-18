@@ -9,10 +9,75 @@ require 'vendor/autoload.php';
 $app = new \Slim\App([
 	'settings' => [
 		'displayErrorDetails' => true
-	] 
+	]
 ]);
 
+
+
 $app->run();
+
+/*
+//Tipo de Resposta
+
+//Cabeçalho
+$app->get('/header', function (Request $request, Response $response) {
+
+	$response->write('Esse é um retorno header');
+	return $response->withHeader('allow', 'PUT');
+	$response->withAddedHeader('Content-Length', 10);
+});
+
+
+//Json
+$app->get('/json', function (Request $request, Response $response) {
+
+	return $response->withJson([
+		"nome" => "matheus",
+		"endereco" => "rua..."
+	]);
+});
+
+//xml
+$app->get('/xml', function (Request $request, Response $response) {
+
+	$xml = file_get_contents('arquivo');
+	$response->write($xml);
+
+	return $response->withHeader('Conten-Type', 'application/xml');
+});
+
+
+
+/*
+//middleaware
+
+$app->add(function ($request, $response, $next) {
+	$response->write('Inicio camada 1 + ');
+	//return $next($request,$response);
+	$response = $next($request,$response);
+
+	$response->write(' + fim camada 1  ');
+	return $response;
+});
+
+/*
+$app->add(function ($request, $response, $next) {
+	$response->write('Inicio camada 2 + ');
+	return $next($request,$response);
+});
+
+
+$app->get('/usuarios', function (Request $request, Response $response) {
+
+	$response->write('Ação principal usuarios');
+});
+
+$app->get('/postagens', function (Request $request, Response $response) {
+
+	$response->write('Ação principal postagens');
+});
+
+
 
 /* Container dependency injection
 class Servico {
@@ -178,4 +243,3 @@ $app->group('/v5', function(){
 } );
 
 */
-
