@@ -3,38 +3,45 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+
 require 'vendor/autoload.php';
 
-$app = new \Slim\App;
+$app = new \Slim\App([
+	'settings' => [
+		'displayErrorDetails' => true
+	] 
+]);
 
-//container dependency injection
-// class Servico{
+$app->run();
 
-// }
-// $servico = new Servico;
+/* Container dependency injection
+class Servico {
 
-//container pimple
+}
+
+/* Container Pimple 
 $container = $app->getContainer();
 $container['servico'] = function(){
 	return new Servico;
-}
+};
 
-$app->get('/usuario', function(Request $request, Response $response){
-
-	$servico = $this->get('servico');
-	var_dump($servico);
-
-} );
-
-//controllers com serviços
-$app->get('/servico', function(Request $request, Response $response){
+$app->get('/servico', function(Request $request, Response $response) {
 
 	$servico = $this->get('servico');
 	var_dump($servico);
-
+	
 } );
 
-$app->run();
+/* Controllers como serviço 
+$container = $app->getContainer();
+$container['Home'] = function(){
+	return new MyApp\controllers\Home( new MyApp\View );
+};
+$app->get('/usuario', 'Home:index' );
+*/
+
+
+
 /* Padrão PSR7 
 $app->get('/postagens', function(Request $request, Response $response){
 
@@ -53,8 +60,9 @@ post -> Criar dado no servidor (Insert)
 put -> Atualizar dados no servidor (Update)
 delete -> Deletar dados do servidor (Delete)
 
+*/
 
-
+/*
 $app->delete('/usuarios/remove/{id}', function(Request $request, Response $response){
 
 	$id = $request->getAttribute('id');
@@ -79,7 +87,7 @@ $app->put('/usuarios/atualiza', function(Request $request, Response $response){
 	/*
 	Atualizar no banco de dados com UPDATE..
 	....
-
+	
 
 	return $response->getBody()->write( "Sucesso ao atualizar: " . $id );
 
@@ -99,8 +107,8 @@ $app->post('/usuarios/adiciona', function(Request $request, Response $response){
 
 	return $response->getBody()->write( "Sucesso" );
 
-} );
-*/
+} );*/
+
 
 
 
@@ -140,9 +148,9 @@ $app->get('/lista/{itens:.*}', function($request, $response){
 	var_dump(explode("/", $itens));
 
 } );
+*/
 
-
-//Nomear rotas
+/* Nomear rotas 
 $app->get('/blog/postagens/{id}', function($request, $response){
 	echo "Listar postagem para um ID ";
 })->setName("blog");
@@ -154,9 +162,9 @@ $app->get('/meusite', function($request, $response){
 	echo $retorno;
 
 });
+*/
 
-
-//Agrupar rotas
+/* Agrupar rotas 
 $app->group('/v5', function(){
 	
 	$this->get('/usuarios', function(){
@@ -168,5 +176,6 @@ $app->group('/v5', function(){
 	} );
 
 } );
+
 */
 
