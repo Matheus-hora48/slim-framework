@@ -1,4 +1,9 @@
 {
+    "autoload":{
+        "prs-4" : {
+            "MyApp\\" : "src/MyApp"
+        }
+    }
     "require": {
         "slim/slim": "3.*"
     }
