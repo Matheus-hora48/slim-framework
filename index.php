@@ -8,13 +8,29 @@ require 'vendor/autoload.php';
 $app = new \Slim\App;
 
 //container dependency injection
-class Servico{
+// class Servico{
 
+// }
+// $servico = new Servico;
+
+//container pimple
+$container = $app->getContainer();
+$container['servico'] = function(){
+	return new Servico;
 }
-$servico = new Servico;
+
 $app->get('/servico', function(Request $request, Response $response){
 
-	var_dump($servico)
+	$servico = $this->get('servico');
+	var_dump($servico);
+
+} );
+
+//controllers com serviços
+$app->get('/servico', function(Request $request, Response $response){
+
+	$servico = $this->get('servico');
+	var_dump($servico);
 
 } );
 
