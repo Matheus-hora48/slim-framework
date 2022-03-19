@@ -12,7 +12,77 @@ $app = new \Slim\App([
 	]
 ]);
 
+$container = $app->getContainer();
+$container['db'] = function () {
 
+	$capsule = new Capsule;
+
+	$capsule->addConnection([
+		'driver' => 'mysql',
+		'host' => 'localhost',
+		'database' => 'slim',
+		'username' => 'root',
+		'password' => '',
+		'charset' => 'utf8',
+		'collation' => 'utf8_unicode_ci',
+		'prefix' => '',
+	]);
+};
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+return $capsule;
+
+$app->get('/usuarios', function (Request $request, Response $response) {
+
+	
+
+	$db = $this->get('db');
+
+	//criando tabela
+	/* 
+	$db->schema()->dropIfExists('usuarios');
+	$db->schema()->create('usuarios', function ($table) {
+		$table->increments('id');
+		$table->string('nome')->unique();
+		$table->string('email')->unique();
+		$table->timestamps();
+	});
+	*/
+
+	//Inserir dados
+	/*
+	$db->table('usuarios')->insert([
+		'nome' => 'Matheus Hora',
+		'email' => 'matheus@teste.com'
+	]);
+	*/
+
+	//Atualizar
+	/*
+	$db->table('usuarios')
+			->where('id',1)
+			->update([
+				'nome' => 'Jamilton'
+			])
+	*/
+
+	//deletar
+	/*
+	$db->table('usuarios')
+			->where('id',1)
+			->delete([
+				'nome' => 'Jamilton'
+			])
+	*/
+
+	//listar
+	$usuarios = $db->table('usuarios')->get();
+	foreach($usuarios as $usuarios){
+		echo $usuarios->nome .'<br>';
+	}
+});
 
 $app->run();
 
